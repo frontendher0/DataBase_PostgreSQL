@@ -1,11 +1,18 @@
+import 'dart:convert';
+import 'package:database/pages/info.dart';
 import 'package:flutter/material.dart';
-import 'package:postgres/postgres.dart';
+import 'package:http/http.dart' as http;
 
 class Objectview extends StatefulWidget {
   const Objectview({Key? key}) : super(key: key);
 
   @override
   _ObjectviewState createState() => _ObjectviewState();
+}
+
+Future navigateToSubPage(context) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const Info()));
 }
 
 TextEditingController _idController = TextEditingController();
@@ -63,7 +70,11 @@ class _ObjectviewState extends State<Objectview> {
           },
           child: Text(
             text,
+<<<<<<< HEAD
             style: TextStyle(
+=======
+            style: const TextStyle(
+>>>>>>> f392d10d14b05deda32dcf98b2b228236bf51594
                 fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
           ));
     }
@@ -90,9 +101,27 @@ class _ObjectviewState extends State<Objectview> {
       ));
     }
 
+<<<<<<< HEAD
+=======
+    Future<void> getData(String id) async {
+      String url = 'http://10.0.2.2:5000/Factories?id=$id';
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        String jsonString = response.body;
+        final jsonResponse = json.decode(jsonString);
+        object = Factory.fromJson(jsonResponse);
+        navigateToSubPage(context);
+      } else {
+        print('Request failed with status: ${response.statusCode}.');
+      }
+    }
+
+>>>>>>> f392d10d14b05deda32dcf98b2b228236bf51594
     void buttonAction() {
       _id = _idController.text;
       _idController.clear();
+      getData(_id);
     }
 
     return Scaffold(
