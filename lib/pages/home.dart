@@ -1,3 +1,4 @@
+import 'package:database/pages/objectview.dart';
 import 'package:flutter/material.dart';
 
 
@@ -7,32 +8,37 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
+String choise = '';
+
 
 class _HomeState extends State<Home> {
   
-  String choise = '';
-  String client = 'client';
-  String factory = 'factory';
-  String employee = 'employee';
+Future navigateToSubPage(context) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const Objectview()));
+}
+
+  
+  String client = 'Clients';
+  String factory = 'Factories';
+  String employee = 'Employees';
 
   @override
   Widget build(BuildContext context) {
    Widget logo() {
       return Padding(
           padding: const EdgeInsets.only(top: 100),
-          child: Container(
               child: const Align(
-                  child: Text('Выберите объект,информацию о котором вы хотите узнать:',
+                  child: Text('Выберите объект,информацию о котором Вы хотите узнать:',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                      )))));
+                      ))));
     }
 
      Widget factorybutton(String text, void Function() pressed) {
-      return Padding(
-        padding: EdgeInsets.only(top:10),
+      return Container(
         child: ElevatedButton(
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.all(
@@ -53,8 +59,7 @@ class _HomeState extends State<Home> {
     }
 
      Widget employeebutton(String text, void Function() pressed) {
-    return Padding(
-        padding: EdgeInsets.only(top: 10),
+    return Container(
         child: ElevatedButton(
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.all(
@@ -75,8 +80,7 @@ class _HomeState extends State<Home> {
     }
 
      Widget clientbutton(String text, void Function() pressed) {
-      return Padding(
-        padding: EdgeInsets.only(top: 10),
+      return Container(
         child: ElevatedButton(
           style: ButtonStyle(
             overlayColor: MaterialStateProperty.all(
@@ -97,7 +101,7 @@ class _HomeState extends State<Home> {
     }
     Widget factoryform(String label, void pressed()) {
       return Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only( top:50 , left: 20, right: 20),
               child: Container(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
@@ -107,7 +111,7 @@ class _HomeState extends State<Home> {
 
      Widget employeeform(String label, void pressed()) {
       return Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
               child: Container(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
@@ -117,7 +121,7 @@ class _HomeState extends State<Home> {
 
      Widget clientform(String label, void pressed()) {
       return Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
               child: Container(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
@@ -127,15 +131,17 @@ class _HomeState extends State<Home> {
 
     void factorybuttonAction(){
       choise = factory;
-      
+      navigateToSubPage(context);
     }
 
     void employeebuttonAction(){
       choise = employee;
+      navigateToSubPage(context);
     }
 
     void clientbuttonAction(){
       choise = client;
+      navigateToSubPage(context);
     }
 
 
@@ -145,8 +151,7 @@ class _HomeState extends State<Home> {
         logo(),
         factoryform('Поиск Объекта',factorybuttonAction),
         employeeform('Поиск сотрудника', employeebuttonAction),
-        clientform('Поиск клиента', clientbuttonAction)
-
+        clientform('Поиск клиента', clientbuttonAction),
       ],
     ));
 

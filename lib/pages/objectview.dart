@@ -1,6 +1,9 @@
 import 'dart:convert';
-import 'package:database/pages/info.dart';
+import 'package:database/pages/employee.dart';
+import 'package:database/pages/factoryinfo.dart';
 import 'package:flutter/material.dart';
+import 'package:database/pages/home.dart';
+import 'package:database/pages/clientinfo.dart';
 import 'package:http/http.dart' as http;
 
 class Objectview extends StatefulWidget {
@@ -11,9 +14,21 @@ class Objectview extends StatefulWidget {
 }
 
 Future navigateToSubPage(context) async {
-  Navigator.push(
-      context, MaterialPageRoute(builder: (context) => const Info()));
+  switch(choise)
+  {
+    case 'Factories':  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const FactoryInfo()));
+    case 'Client':  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const ClientInfo()));
+    case 'Employee':  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const EmployeeInfo()));
+  }
 }
+Future navigateToPrevPage(context) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const Home()));
+}
+
 
 TextEditingController _idController = TextEditingController();
 String _id = '';
@@ -70,11 +85,7 @@ class _ObjectviewState extends State<Objectview> {
           },
           child: Text(
             text,
-<<<<<<< HEAD
-            style: TextStyle(
-=======
             style: const TextStyle(
->>>>>>> f392d10d14b05deda32dcf98b2b228236bf51594
                 fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
           ));
     }
@@ -101,10 +112,8 @@ class _ObjectviewState extends State<Objectview> {
       ));
     }
 
-<<<<<<< HEAD
-=======
     Future<void> getData(String id) async {
-      String url = 'http://10.0.2.2:5000/Factories?id=$id';
+      String url = 'http://10.0.2.2:5000/$choise?id=$id';
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -117,7 +126,6 @@ class _ObjectviewState extends State<Objectview> {
       }
     }
 
->>>>>>> f392d10d14b05deda32dcf98b2b228236bf51594
     void buttonAction() {
       _id = _idController.text;
       _idController.clear();
@@ -130,6 +138,16 @@ class _ObjectviewState extends State<Objectview> {
         logo(),
         form('Поиск', buttonAction),
       ],
+    ),
+    floatingActionButton: FloatingActionButton(
+        onPressed:(){
+          navigateToPrevPage(context);
+        },
+        tooltip: 'Вернуться назад',
+        backgroundColor: Colors.black,
+        child: const Icon(Icons.backspace,color: Colors.white,),
+       
+    
     ));
   }
 }

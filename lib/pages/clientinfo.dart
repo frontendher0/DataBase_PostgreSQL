@@ -1,44 +1,43 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:convert';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-
-class Factory {
+import 'package:database/pages/objectview.dart';
+class Client {
   int id;
   String name;
-  String description;
+  String surname;
+  String patronum;
   String phoneNumber;
-  String picture;
-  Factory(
+ 
+  Client(
       {required this.id,
       required this.name,
-      required this.description,
+      required this.surname,
+      required this.patronum,
       required this.phoneNumber,
-      required this.picture});
-  factory Factory.fromJson(Map<String, dynamic> parsedJson) {
-    return Factory(
+      });
+
+  
+  factory Client.fromJson(Map<String, dynamic> parsedJson) {
+    return Client(
         id: parsedJson['id'],
         name: parsedJson['name'],
-        description: parsedJson['description'],
-        phoneNumber: parsedJson['phone_number'],
-        picture: parsedJson['picture']);
+        surname: parsedJson['surname'],
+        patronum: parsedJson['phone_number'],
+        phoneNumber: parsedJson['patronum']); 
   }
+  
 }
 
-Image imageDecoder(String base64String) {
-  return Image.memory(base64Decode(base64String));
+Future navigateToPrevPage(context) async {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const Objectview()));
 }
 
-Factory object =
-    Factory(id: 0, name: '', description: '', phoneNumber: '', picture: '');
->>>>>>> f392d10d14b05deda32dcf98b2b228236bf51594
 
-class Info extends StatelessWidget {
-  const Info({Key? key}) : super(key: key);
+Client client =
+    Client(id: 0, name: '', surname: '', patronum: '', phoneNumber: '');
+
+  class ClientInfo extends StatelessWidget {
+  const ClientInfo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class Info extends StatelessWidget {
       return Padding(
           padding: const EdgeInsets.only(top: 80),
           child: const Align(
-              child: Text('Информация об объекте:',
+              child: Text('Информация о клиенте:',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -54,16 +53,16 @@ class Info extends StatelessWidget {
                   ))));
     }
 
-    Widget information() {
+  Widget information() {
       return Container(
         child: Column(children: [
           Padding(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Expanded(
                 flex: 1,
-                child: Text('ID Объекта: ${object.id}',
+                child: Text('Имя: ${client.name}',
                     textAlign: TextAlign.justify,
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
@@ -74,7 +73,7 @@ class Info extends StatelessWidget {
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Expanded(
                 flex: 1,
-                child: Text('Имя проекта: ${object.name}',
+                child: Text('Фамилия: ${client.surname}',
                     textAlign: TextAlign.justify,
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
@@ -85,7 +84,7 @@ class Info extends StatelessWidget {
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Expanded(
                 flex: 1,
-                child: Text('Описание проекта: ${object.description}',
+                child: Text('Отчество: ${client.patronum}',
                     textAlign: TextAlign.justify,
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
@@ -96,26 +95,31 @@ class Info extends StatelessWidget {
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Expanded(
                 flex: 1,
-                child: Text('Номер телефона: ${object.phoneNumber}',
+                child: Text('Номер телефона: ${client.phoneNumber}',
                     textAlign: TextAlign.justify,
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-          Padding(
-            padding: EdgeInsets.only(
-              top: 45,
-            ),
-          ),
-          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Expanded(flex: 1, child: imageDecoder(object.picture))
-          ])
-        ]),
+          ]), 
+        
       );
     }
 
-    return Scaffold(
+return Scaffold(
         body: Column(
       children: [logo(), information()],
-    ));
+    ),
+     floatingActionButton: FloatingActionButton(
+        onPressed:(){
+          navigateToPrevPage(context);
+        },
+        tooltip: 'Вернуться назад',
+        backgroundColor: Colors.black,
+        child: const Icon(Icons.backspace,color: Colors.white,),
+    )
+    );
   }
 }
+
+
+
