@@ -19,16 +19,16 @@ Future navigateToSubPage(context) async {
 }
 
   
-  String client = 'Clients';
+  String client = 'Client';
   String factory = 'Factories';
-  String employee = 'Employees';
+  String employee = 'Employee';
 
   @override
   Widget build(BuildContext context) {
    Widget logo() {
-      return Padding(
-          padding: const EdgeInsets.only(top: 100),
-              child: const Align(
+      return  const Padding(
+          padding: EdgeInsets.only(top: 100),
+              child: Align(
                   child: Text('Выберите объект,информацию о котором Вы хотите узнать:',
                       style: TextStyle(
                         fontSize: 20,
@@ -38,71 +38,68 @@ Future navigateToSubPage(context) async {
     }
 
      Widget factorybutton(String text, void Function() pressed) {
-      return Container(
-        child: ElevatedButton(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 255, 255, 255)),
-            surfaceTintColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 0, 0, 0)),
-            backgroundColor:
-                MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
-          ),
-          onPressed: () {
-            pressed();
-          },
-          child: Text(
-            text,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
-          )));
+      return ElevatedButton(
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(
+              const Color.fromARGB(255, 255, 255, 255)),
+          surfaceTintColor:
+              MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
+          backgroundColor:
+              MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
+        ),
+        onPressed: () {
+          pressed();
+        },
+        child: Text(
+          text,
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+        ));
     }
 
      Widget employeebutton(String text, void Function() pressed) {
-    return Container(
-        child: ElevatedButton(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 255, 255, 255)),
-            surfaceTintColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 0, 0, 0)),
-            backgroundColor:
-                MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
-          ),
-          onPressed: () {
-            pressed();
-          },
-          child: Text(
-            text,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
-          )));
+    return ElevatedButton(
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(
+            const Color.fromARGB(255, 255, 255, 255)),
+        surfaceTintColor:
+            MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
+        backgroundColor:
+            MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
+      ),
+      onPressed: () {
+        pressed();
+      },
+      child: Text(
+        text,
+        style: const TextStyle(
+            fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+      ));
     }
 
      Widget clientbutton(String text, void Function() pressed) {
-      return Container(
-        child: ElevatedButton(
-          style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(
-                const Color.fromARGB(255, 255, 255, 255)),
-            surfaceTintColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 0, 0, 0)),
-            backgroundColor:
-                MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
-          ),
-          onPressed: () {
-            pressed();
-          },
-          child: Text(
-            text,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
-          )));
+      return ElevatedButton(
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(
+              const Color.fromARGB(255, 255, 255, 255)),
+          surfaceTintColor:
+              MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
+          backgroundColor:
+              MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
+        ),
+        onPressed: () {
+          pressed();
+        },
+        child: Text(
+          text,
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+        ));
     }
     Widget factoryform(String label, void pressed()) {
       return Container(
               padding: const EdgeInsets.only( top:50 , left: 20, right: 20),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: factorybutton(label, pressed)
@@ -112,7 +109,7 @@ Future navigateToSubPage(context) async {
      Widget employeeform(String label, void pressed()) {
       return Container(
               padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: employeebutton(label, pressed)
@@ -122,7 +119,7 @@ Future navigateToSubPage(context) async {
      Widget clientform(String label, void pressed()) {
       return Container(
               padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
                 child: clientbutton(label, pressed)

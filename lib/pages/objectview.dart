@@ -10,6 +10,7 @@ class Objectview extends StatefulWidget {
   const Objectview({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ObjectviewState createState() => _ObjectviewState();
 }
 
@@ -37,16 +38,15 @@ class _ObjectviewState extends State<Objectview> {
   @override
   Widget build(BuildContext context) {
     Widget logo() {
-      return Padding(
-          padding: const EdgeInsets.only(top: 100),
-          child: Container(
-              child: const Align(
-                  child: Text('Информация об объекте:',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      )))));
+      return const Padding(
+          padding: EdgeInsets.only(top: 100),
+          child: Align(
+              child: Text('Информация об объекте:',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ))));
     }
 
     Widget input(String hint, TextEditingController controller) {
@@ -76,7 +76,7 @@ class _ObjectviewState extends State<Objectview> {
             overlayColor: MaterialStateProperty.all(
                 const Color.fromARGB(255, 255, 255, 255)),
             surfaceTintColor:
-                MaterialStateProperty.all(Color.fromARGB(255, 0, 0, 0)),
+                MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
             backgroundColor:
                 MaterialStateProperty.all(const Color.fromARGB(255, 0, 0, 0)),
           ),
@@ -91,25 +91,24 @@ class _ObjectviewState extends State<Objectview> {
     }
 
     Widget form(String label, void pressed()) {
-      return Container(
-          child: Column(
+      return Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(bottom: 25, top: 25),
-            child: input("Введите ID: ", _idController),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Container(
-                height: 50,
-                width: MediaQuery.of(context).size.width,
-                child: button(label, pressed),
-              ))
+      Padding(
+        padding: const EdgeInsets.only(bottom: 25, top: 25),
+        child: input("Введите ID: ", _idController),
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+      Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: SizedBox(
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            child: button(label, pressed),
+          ))
         ],
-      ));
+      );
     }
 
     Future<void> getData(String id) async {

@@ -49,9 +49,9 @@ Employee employee =
   @override
   Widget build(BuildContext context) {
     Widget logo() {
-      return Padding(
-          padding: const EdgeInsets.only(top: 80),
-          child: const Align(
+      return const Padding(
+          padding: EdgeInsets.only(top: 80),
+          child: Align(
               child: Text('Информация о сотруднике:',
                   style: TextStyle(
                     fontSize: 25,
@@ -63,7 +63,7 @@ Employee employee =
   Widget information() {
       return Container(
         child: Column(children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -74,7 +74,7 @@ Employee employee =
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -85,7 +85,7 @@ Employee employee =
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -96,7 +96,7 @@ Employee employee =
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -107,7 +107,7 @@ Employee employee =
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-           Padding(
+           const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -118,7 +118,7 @@ Employee employee =
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-           Padding(
+           const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -127,9 +127,9 @@ Employee employee =
                 child: Text('Специализация: ${employee.specialization}',
                     textAlign: TextAlign.justify,
                     style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
+                        const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-           Padding(
+           const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -138,9 +138,9 @@ Employee employee =
                 child: Text('Место работы: ${employee.workplace}',
                     textAlign: TextAlign.justify,
                     style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
+                        const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]),
-           Padding(
+           const Padding(
             padding: EdgeInsets.only(top: 45),
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -149,7 +149,7 @@ Employee employee =
                 child: Text('ID Места работы: ${employee.workplaceId}',
                     textAlign: TextAlign.justify,
                     style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
+                        const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
           ]), 
         ]),
       );

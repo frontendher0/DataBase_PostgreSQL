@@ -42,9 +42,9 @@ Client client =
   @override
   Widget build(BuildContext context) {
     Widget logo() {
-      return Padding(
-          padding: const EdgeInsets.only(top: 80),
-          child: const Align(
+      return const Padding(
+          padding: EdgeInsets.only(top: 80),
+          child: Align(
               child: Text('Информация о клиенте:',
                   style: TextStyle(
                     fontSize: 25,
@@ -54,55 +54,52 @@ Client client =
     }
 
   Widget information() {
-      return Container(
-        child: Column(children: [
-          Padding(
-            padding: EdgeInsets.only(top: 45),
-          ),
-          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Expanded(
-                flex: 1,
-                child: Text('Имя: ${client.name}',
-                    textAlign: TextAlign.justify,
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
-          ]),
-          Padding(
-            padding: EdgeInsets.only(top: 45),
-          ),
-          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Expanded(
-                flex: 1,
-                child: Text('Фамилия: ${client.surname}',
-                    textAlign: TextAlign.justify,
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
-          ]),
-          Padding(
-            padding: EdgeInsets.only(top: 45),
-          ),
-          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Expanded(
-                flex: 1,
-                child: Text('Отчество: ${client.patronum}',
-                    textAlign: TextAlign.justify,
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
-          ]),
-          Padding(
-            padding: EdgeInsets.only(top: 45),
-          ),
-          Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            Expanded(
-                flex: 1,
-                child: Text('Номер телефона: ${client.phoneNumber}',
-                    textAlign: TextAlign.justify,
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
-          ]),
-          ]), 
-        
-      );
+      return Column(children: [
+        const Padding(
+          padding: EdgeInsets.only(top: 45),
+        ),
+        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Expanded(
+              flex: 1,
+              child: Text('Имя: ${client.name}',
+                  textAlign: TextAlign.justify,
+                  style:
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
+        ]),
+        const Padding(
+          padding: EdgeInsets.only(top: 45),
+        ),
+        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Expanded(
+              flex: 1,
+              child: Text('Фамилия: ${client.surname}',
+                  textAlign: TextAlign.justify,
+                  style:
+                      const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
+        ]),
+        const Padding(
+          padding: EdgeInsets.only(top: 45),
+        ),
+        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Expanded(
+              flex: 1,
+              child: Text('Отчество: ${client.patronum}',
+                  textAlign: TextAlign.justify,
+                  style:
+                      const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
+        ]),
+        const Padding(
+          padding: EdgeInsets.only(top: 45),
+        ),
+        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Expanded(
+              flex: 1,
+              child: Text('Номер телефона: ${client.phoneNumber}',
+                  textAlign: TextAlign.justify,
+                  style:
+                      const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
+        ]),
+        ]);
     }
 
 return Scaffold(
