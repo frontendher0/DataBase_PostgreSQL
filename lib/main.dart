@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         selectedLabelStyle : TextStyle(fontWeight: FontWeight.bold),
         unselectedLabelStyle : TextStyle(fontWeight: FontWeight.bold),
         type : BottomNavigationBarType.fixed,
-            backgroundColor: AppColors.mainDarkPurple ),
+          backgroundColor: AppColors.mainBlack ),
           useMaterial3: true,
         ),
         home: MainPage()

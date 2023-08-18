@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:database/pages/companyregister.dart';
 import 'package:database/pages/settings.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:typed_data';
+import 'package:database/pages/utils.dart';
 
 Future navigateToAddingCompanyPage(context) async {
   Navigator.push(context,
@@ -38,6 +41,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Uint8List? _image;
+  void selectImage() async {
+    Uint8List? img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -62,9 +72,10 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Text(
             text,
             style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+                fontWeight: FontWeight.bold, color: Colors.white, fontSize: 22),
           ));
     }
+
 
     Widget _settingsButton(IconData icon, void Function() pressed) {
       return IconButton(
@@ -83,16 +94,35 @@ class _ProfilePageState extends State<ProfilePage> {
         fontWeight: FontWeight.bold,
         fontSize: 25),),
       leading: _settingsButton(Icons.settings, _settingsButtonAction),),
-              
+
+
+    
+
       body: Column(
+        
         children: [
-          const SizedBox(height: 20),
-          Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              child: const Placeholder(),
-            ),
+          SizedBox(height: 25),
+           Center(
+            child: Stack(
+            children:[ 
+               _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : 
+              const CircleAvatar(
+                radius: 58,
+                backgroundImage: NetworkImage('https://stickerswiki.ams3.cdn.digitaloceanspaces.com/roflanHD/6680083.512.webp'),
+              ),
+            Positioned(
+              bottom: -10,
+              left: 80,
+              child: IconButton(
+            onPressed: selectImage, icon: Icon(Icons.add_a_photo),
+            ))
+            ]
+            )
           ),
           Text('${nekit.login}',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
@@ -104,7 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const Row(children: [
             Padding(
               padding: EdgeInsets.only(left: 20,top:35.0),
-              child: Text('Мои компании:',
+              child: Text('Мои объекты:',
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 25,
@@ -112,14 +142,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   )),
             ),
           ]),
-          const SizedBox(height: 300),
+          const SizedBox(height: 230),
           
               Padding(
               padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
               child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width,
-                child: _button('Добавить компанию', _buttonaction),
+                child: _button('Добавить объект', _buttonaction),
               )),
         ],
       ),

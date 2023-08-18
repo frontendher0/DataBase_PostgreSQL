@@ -1,5 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:database/pages/serviceadding.dart';
+import 'package:image_picker/image_picker.dart';
+
+
+/*Future<void> getLostData() async {
+  final ImagePicker picker = ImagePicker();
+  final LostDataResponse response = await picker.retrieveLostData();
+  if (response.isEmpty) {
+    return;
+  }
+  final List<XFile>? files = response.files;
+  if (files != null) {
+    _handleLostFiles(files);
+  } else {
+    _handleError(response.exception);
+  }
+}*/
+
+
+List<Widget> picrures = [];
+
+
 
 Future navigateToServiceAddingPage(context) async {
     Navigator.push(
@@ -7,8 +28,6 @@ Future navigateToServiceAddingPage(context) async {
  }
 
  
-
-final List<String> servicesNames = [];
 
 
 class CompanyRegisterPage extends StatefulWidget {
@@ -44,9 +63,9 @@ class _CompanyRegisterPageState extends State<CompanyRegisterPage> {
       return const Padding(
           padding: EdgeInsets.only(top: 70,bottom: 20),
           child: Align(
-              child: Text('Регистрация Компании',
+              child: Text('Регистрация объекта',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ))));
@@ -93,15 +112,15 @@ class _CompanyRegisterPageState extends State<CompanyRegisterPage> {
           ));
     }
 
-
+  Widget _pictureholder(){
+    return Image(image:
+     Image.network('https://sun9-45.userapi.com/impg/ijywhzCK8DCTXTwNfu_3W2NQpULk-5Flggfptw/bTLO4oZDljo.jpg?size=960x1280&quality=95&sign=dcb8013a412192bca0857a9b93223879&type=album').image ,
+     fit: BoxFit.cover);
+  }
     
 
 
-    Widget nameServices(){
-      Padding (padding:EdgeInsets.only(left:5));
-      return Text('${servicesNames}');
-
-    }
+ 
 
     Widget _form(String label, void pressed()) {
       return Column(
@@ -109,12 +128,12 @@ class _CompanyRegisterPageState extends State<CompanyRegisterPage> {
         children: <Widget>[
       Padding(
         padding: const EdgeInsets.only(top: 5),
-        child: _input("Введите название компании: ", _companyNameController),
+        child: _input("Введите название объекта: ", _companyNameController),
       ),
      
       Padding(
         padding: const EdgeInsets.only(top: 5),
-        child: _input("Введите описание компании: ", _companyDescriptionController),
+        child: _input("Введите описание объекта: ", _companyDescriptionController),
       ),
      
       Padding(
@@ -122,20 +141,76 @@ class _CompanyRegisterPageState extends State<CompanyRegisterPage> {
         child: _input("Введите номер телефона: ", _companyPhoneNumberController),
       ),
 
-      Padding(
-        
-        padding: EdgeInsets.only(top: 5),
-        child: Column(
-         mainAxisAlignment : MainAxisAlignment.start,
-         children: [
-          Text('Ваши услуги:',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-          nameServices()     
-         ])
-      ),
+      Column(
+        children: [
+          const Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Text ('Фотографии объекта:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+              ),
+            ],),
+
+            Row(
+              children:[
+                Container(
+                  margin: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 5,
+                   )
+                  ),
+                  width: 100,height: 100,
+                  child: IconButton(icon: const Icon(Icons.add_a_photo,color: Colors.white,), 
+                  onPressed: () { },),
+                ),
+                Container(
+                  margin: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                  image: Image.network(
+                  'https://sun9-62.userapi.com/impg/EiKJC5UOufKH8PBCFG05hBPkQtcYZw_RmyUhgg/PcQKTI7ux44.jpg?size=200x150&quality=95&sign=4f630ec31f1c6416bbdd957f0e4336bd&c_uniq_tag=sj412vCUV-wqlNYsfWXeRKJrmEEF3_t_eTVqm43QtVI&type=album').image ,
+                  fit: BoxFit.cover)
+                  ),
+                  
+                  width: 100,height: 100,
+                ),
+                Container(
+                  margin: EdgeInsets.all(15),
+                  width: 100,height: 100,
+                  decoration: BoxDecoration(
+                  image: DecorationImage(
+                  image: Image.network(
+                  'https://sun9-41.userapi.com/impg/ED-kO-7BHALE5vJxUGeMJINq-yLXKXWuqDUcDQ/MwgkrmkxTnc.jpg?size=605x807&quality=96&sign=378478c15d2d3fbae198f377039ea475&c_uniq_tag=ZfMpR0O8cuiPrayud9dV-QH0bKa4j6RykBBTBUd00Nc&type=album').image ,
+                  fit: BoxFit.cover),
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(15),
+                  ))
+                  
+                  
+                
+            ],),
+            const Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Text ('Добавить услуги:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+              ),
+            ],),
+        ]),
+
      
-      const SizedBox(
-        height: 10
-      ),
+
+
+
+
+     
+      
       Padding(
           padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
           child: SizedBox(
@@ -151,13 +226,17 @@ class _CompanyRegisterPageState extends State<CompanyRegisterPage> {
       navigateToServiceAddingPage(context);
     }
 
+    
+
+
+
      return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: Column(
           children: <Widget>[
             _logo(),
-            _form('Добавить услугу',_addServicebuttonAction),
+            _form('Редактор услуг',_addServicebuttonAction),
            
           ],
         ));

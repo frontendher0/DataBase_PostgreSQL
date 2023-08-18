@@ -1,5 +1,43 @@
 import 'package:database/pages/registration.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<void> getData(String login, String password) async {
+  String url = 'http://192.168.100.26:5000/Auth?login=$login&password=$password';
+  final response = await http.get(Uri.parse(url));
+
+  if (response.statusCode == 200) {
+    print(response.body);
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
+
+Future<void> postData() async {
+  final url = Uri.parse('http://10.0.2.2:5000/User/');
+
+  final Map<String, String> data = {
+    'email': _loginController.text,
+    'password': _passwordController.text,
+  };
+
+  final response = await http.post(
+    url,
+    headers: {'Authorization': 'authorization/json'},
+    body: json.encode(data),
+  );
+
+  if (response.statusCode == 201) {
+
+    print('Data posted successfully');
+  } else {
+
+    print('Request failed with status: ${response.statusCode}');
+  }
+}
+
+
 
 
  Future navigateToSubPage(context) async {
@@ -14,10 +52,10 @@ class AuthorizationPage extends StatefulWidget {
   State<AuthorizationPage> createState() => _AuthorizationPageState();
 }
 
-TextEditingController _emailController = TextEditingController();
+TextEditingController _loginController = TextEditingController();
 TextEditingController _passwordController = TextEditingController();
 
-String _email = '';
+String _login = '';
 String _password = '';
 bool showLogin = true;
 
@@ -96,7 +134,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 25, top: 13),
             child: _input(
-                const Icon(Icons.person), "Логин", _emailController, false),
+                const Icon(Icons.person), "Логин", _loginController, false),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 25),
@@ -147,11 +185,11 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
     
 
       void _buttonAction() {
-      _email = _emailController.text;
+      _login = _loginController.text;
       _password = _passwordController.text;
-      _emailController.clear();
+      _loginController.clear();
       _passwordController.clear();
-      //getData(_email, _password);
+      getData(_login, _password);
     }
 
 

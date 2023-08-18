@@ -148,7 +148,6 @@ class _serviceAddingPageState extends State<serviceAddingPage> {
 
    
    void _buttonAction() async {
-      servicesNames.add(_serviceNameController.text);
       NewService(name: _serviceNameController.text, price: _servicePriceController.text, description: _serviceDescriptionController.text);
        _serviceNameController.clear();
        _servicePriceController.clear();
