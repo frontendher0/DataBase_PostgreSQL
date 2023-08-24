@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:database/pages/profile.dart';
-
+import 'package:database/pages/newsline.dart';
 
 
 class MainPage extends StatefulWidget {
@@ -15,9 +15,7 @@ class _MainPageState extends State<MainPage> {
   int _selectedTab = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Главная'
-    ),
+    NewslinePage(),
     Text(
       'Рейтинг'
     ),

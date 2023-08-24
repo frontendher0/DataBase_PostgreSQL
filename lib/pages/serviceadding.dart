@@ -1,38 +1,81 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:database/pages/companyregister.dart';
+import 'dart:io';
+import 'package:database/pages/utils.dart';
+import 'package:http/http.dart' as http;
+
 
 Future navigateToCompanyRegisterPage(context) async {
     Navigator.push(
       context, MaterialPageRoute(builder: (context) => const CompanyRegisterPage()));
  }
 
-class NewService{
-String name;
-String price;
-String description;
-//image
 
-NewService({required this.name, required this.price, required this.description});
+
+
+
+List parseFiles(List files) {
+List stringList = [];
+for (var file in files) {
+if (file.existsSync()) {
+Uint8List content = file.readAsBytesSync();
+stringList.add(base64Encode(content));
+}
+}
+return stringList;
+}
+
+
+void postData() async {
+String apiUrl = 'https://api.example.com/post';
+
+Map requestBody = {
+'name': _serviceNameController.text,
+'cost': _servicePriceController.text,
+'description': _serviceDescriptionController.text,
+'images': _serviceImages
+};
+
+// Отправка POST-запроса
+var response = await http.post(Uri.parse(apiUrl), body: requestBody);
+
+// Обработка ответа
+if (response.statusCode == 200) {
+print('Успешный POST-запрос');
+print(response.body);
+} else {
+print('Ошибка POST-запроса: ${response.statusCode}');
+}
 }
 
 
 
+
+String _serviceName = '';
+String _servicePrice = '';
+String _serviceDescription = '';
+List _serviceImages = [];
 
 
 TextEditingController _serviceNameController = TextEditingController();
 TextEditingController _servicePriceController = TextEditingController();
 TextEditingController _serviceDescriptionController = TextEditingController();
 
+final imageHelper = ImageHelper();
 
-
-class serviceAddingPage extends StatefulWidget {
-  const serviceAddingPage({super.key});
+class ServiceAddingPage extends StatefulWidget {
+  const ServiceAddingPage({super.key});
 
   @override
-  State<serviceAddingPage> createState() => _serviceAddingPageState();
+  State<ServiceAddingPage> createState() => _ServiceAddingPageState();
 }
 
-class _serviceAddingPageState extends State<serviceAddingPage> {
+class _ServiceAddingPageState extends State<ServiceAddingPage> {
+  List<File> _images = [];
+
+
   @override
   Widget build(BuildContext context) {
     Widget _logo() {
@@ -41,7 +84,7 @@ class _serviceAddingPageState extends State<serviceAddingPage> {
           child: Align(
               child: Text('Создание новой услуги:',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ))));
@@ -51,7 +94,7 @@ class _serviceAddingPageState extends State<serviceAddingPage> {
     Widget _input(String hint, TextEditingController controller) {
       return Container(
           padding:
-              const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 15),
+              const EdgeInsets.only(top: 10, left: 15, right: 15, bottom: 15),
           child: TextField(
             controller: controller,
             style: const TextStyle(fontSize: 20, color: Colors.black),
@@ -73,8 +116,9 @@ class _serviceAddingPageState extends State<serviceAddingPage> {
     Widget _inputdescription(String hint, TextEditingController controller) {
       return Container(
           padding:
-              const EdgeInsets.only(top: 15, left: 15, right: 5, bottom: 25 ),
+              const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 5 ),
           child: TextField(
+            maxLines: 4,
             controller: controller,
             style: const TextStyle(fontSize: 20, color: Colors.black),
             decoration: InputDecoration(
@@ -131,39 +175,96 @@ class _serviceAddingPageState extends State<serviceAddingPage> {
         padding: const EdgeInsets.only(top: 5,bottom: 5),
         child: _inputdescription("Введите описание услуги: ", _serviceDescriptionController)
       ),
-       SizedBox(
-            height: 15,
+
+
+        Column(
+        children: [
+          const Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Text ('Фотографии объекта:',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+              ),
+            ],),
+
+           
+               SingleChildScrollView(
+                scrollDirection: Axis.horizontal,  
+                 child: 
+                 Row(
+                  children:[
+                     Container(
+                    margin: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 5,
+                     )
+                    ),
+                    width: 100,height: 100,
+                    child: IconButton(icon: const Icon(Icons.add_a_photo,color: Colors.white,), 
+                    onPressed: () async {
+                      final files = await imageHelper.pickImage(multiple:true);
+                      setState(() => _images = files.map((e) => File(e.path)).toList());
+                     },
+                     ),
+                  ),
+                  Wrap(
+                    spacing:4,runSpacing:4,
+                    children:
+                   _images.map((e) => Image.file(
+                    e,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover
+                    )
+                    ).toList(),
+                  ),
+                 ]
           ),
+               ),
+       
           Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(top: 25,left: 15, right: 15),
               child: Container(
-                height: 50,
+                height: 70,
                 width: MediaQuery.of(context).size.width,
                 child: _button(label, pressed),
               ))
-      ]
-      );
+      
+      ])]);
+      
    }
 
 
+
+List stringList = parseFiles(_images); 
    
    void _buttonAction() async {
-      NewService(name: _serviceNameController.text, price: _servicePriceController.text, description: _serviceDescriptionController.text);
+      
+      _serviceName = _serviceNameController.text;
+      _servicePrice = _servicePriceController.text;
+      _serviceDescription = _serviceDescriptionController.text;
+      _serviceImages = stringList;
+       postData();
        _serviceNameController.clear();
        _servicePriceController.clear();
        _serviceDescriptionController.clear();
+      _images.clear();
       
-      //post
    navigateToCompanyRegisterPage(context);
     }
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-        body: Column(
-      children: [
-        _logo(),
-        _form('Создать новую услугу', _buttonAction),
-      ],
-    ),
+        body: SingleChildScrollView(
+          child: Column(
+              children: [
+          _logo(),
+          _form('Создать новую услугу', _buttonAction),
+              ],
+            ),
+        ),
     );
     
  }

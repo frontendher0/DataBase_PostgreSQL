@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:database/pages/phoneaccept.dart';
+import 'package:http/http.dart' as http;
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -8,12 +12,41 @@ class RegistrationPage extends StatefulWidget {
 }
 
 
-String _login = '';
+Future navigateToPhoneAcceptPage(context) async {
+    Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const PhoneAcceptPage()));
+}
+Future<void> Register(String login, String password,String phone_number,String acceptCode,String hashCode) async {
+  String url = 'http://192.168.100.26:5000/User';
+  Map requestBody = {
+"hashCode": hashCode,
+"code": int.parse(acceptCode),
+"login": login,
+"password": password,
+"phone_number": phone_number
+};
+final jsonString = json.encode(requestBody);
+final Map<String, String> headers = {
+    'Accept': '*/*',
+    'Content-Type': 'application/json',
+  };
+
+  final response = await http.post(Uri.parse(url),body:jsonString, headers: headers);  
+  if (response.statusCode == 200) {
+    print(response.body);
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
+
+String login = '';
 TextEditingController _loginController = TextEditingController();
-String _password = '';
+String password = '';
 TextEditingController _passwordController = TextEditingController();
 String _repeatpassword = '';
 TextEditingController _repeatpasswordController = TextEditingController();
+String phone_number = '';
+TextEditingController _phone_numberController = TextEditingController();
 
 class _RegistrationPageState extends State<RegistrationPage> {
   @override
@@ -30,12 +63,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ))));
     }
 
-  Widget _input(String hint, TextEditingController controller) {
+  Widget _input(String hint, TextEditingController controller,bool obscure) {
       return Container(
           padding:
               const EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 15),
           child: TextField(
             controller: controller,
+            obscureText: obscure,
             style: const TextStyle(fontSize: 20, color: Colors.black),
             decoration: InputDecoration(
               hintStyle: const TextStyle(
@@ -77,18 +111,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
         children: <Widget>[
       Padding(
         padding: const EdgeInsets.only(top: 5),
-        child: _input("Введите ваш логин: ", _loginController),
+        child: _input("Введите ваш логин: ", _loginController,false),
+      ),
+
+      Padding(
+        padding: const EdgeInsets.only(top: 5),
+        child: _input("Введите ваш номер телефона: ", _phone_numberController,false),
       ),
      
       Padding(
         padding: const EdgeInsets.only(top: 5),
-        child: _input("Введите ваш пароль: ", _passwordController),
+        child: _input("Введите ваш пароль: ", _passwordController,true),
       ),
      
       Padding(
         padding: const EdgeInsets.only(top: 5),
-        child: _input("Повторите пароль: ", _repeatpasswordController),
+        child: _input("Повторите пароль: ", _repeatpasswordController,true),
       ),
+
+
      
       const SizedBox(
         height: 20
@@ -105,13 +146,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
 
   void _buttonAction() {
-      _login = _loginController.text;
+      login = _loginController.text;
       _loginController.clear();
-      _password = _passwordController.text;
+      phone_number = _phone_numberController.text;
+      _phone_numberController.clear();
+      password = _passwordController.text;
       _passwordController.clear();
       _repeatpassword = _repeatpasswordController.text;
       _repeatpasswordController.clear();
-      //getData();
+      getData();
+      navigateToPhoneAcceptPage(context);
+      
+      
     }
     return Scaffold(
        resizeToAvoidBottomInset: false,

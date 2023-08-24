@@ -1,18 +1,10 @@
 import 'package:database/pages/registration.dart';
 import 'package:flutter/material.dart';
+import 'package:database/mainpage/mainpage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-Future<void> getData(String login, String password) async {
-  String url = 'http://192.168.100.26:5000/Auth?login=$login&password=$password';
-  final response = await http.get(Uri.parse(url));
 
-  if (response.statusCode == 200) {
-    print(response.body);
-  } else {
-    print('Request failed with status: ${response.statusCode}.');
-  }
-}
 
 Future<void> postData() async {
   final url = Uri.parse('http://10.0.2.2:5000/User/');
@@ -31,6 +23,8 @@ Future<void> postData() async {
   if (response.statusCode == 201) {
 
     print('Data posted successfully');
+
+
   } else {
 
     print('Request failed with status: ${response.statusCode}');
@@ -44,6 +38,10 @@ Future<void> postData() async {
     Navigator.push(
       context, MaterialPageRoute(builder: (context) => const RegistrationPage()));
  }
+ Future navigateToHomePage(context) async {
+    Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const MainPage()));
+ }
 
 class AuthorizationPage extends StatefulWidget {
   const AuthorizationPage({super.key});
@@ -51,6 +49,7 @@ class AuthorizationPage extends StatefulWidget {
   @override
   State<AuthorizationPage> createState() => _AuthorizationPageState();
 }
+
 
 TextEditingController _loginController = TextEditingController();
 TextEditingController _passwordController = TextEditingController();
@@ -73,6 +72,19 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
                     color: Color.fromARGB(255, 0, 0, 0),
                   ))));
     }
+    
+  Future<void> getToken(String login, String password) async {
+  String url = 'http://192.168.100.26:5000/Auth/login?login=$login&password=$password';
+  final response = await http.post(Uri.parse(url));
+
+  if (response.statusCode == 200) {
+    print(response.body);
+    navigateToHomePage(context);
+
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
 
     Widget _input(Icon icon, String hint, TextEditingController controller,
         bool obscure) {
@@ -189,7 +201,7 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       _password = _passwordController.text;
       _loginController.clear();
       _passwordController.clear();
-      getData(_login, _password);
+      getToken(_login, _password);
     }
 
 

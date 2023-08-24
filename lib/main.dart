@@ -1,6 +1,7 @@
 import 'package:database/pages/authorization.dart';
 import 'package:database/pages/registration.dart';
 import 'package:flutter/material.dart';
+import 'package:database/pages/phoneaccept.dart';
 import 'package:database/pages/objectview.dart';
 import 'package:database/pages/factoryinfo.dart';
 import 'package:database/pages/home.dart';
@@ -10,6 +11,8 @@ import 'package:database/pages/serviceadding.dart';
 import 'package:database/pages/companyregister.dart';
 import 'package:database/mainpage/mainpage.dart';
 import 'package:database/theme/app_colors.dart';
+import 'package:database/pages/settings.dart';
+import 'package:database/pages/serviceadding.dart';
 void main() {
   runApp(const MyApp());
 }
